@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grade Calculator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script> tailwind.config = { theme: { extend: { colors: { primary: '#6366F1', secondary: '#D1D5DB', background: '#1E293B', card: '#334155', text: '#E2E8F0', }, animation: { fadeIn: 'fadeIn 0.5s ease-out', slideUp: 'slideUp 0.5s ease-out', }, keyframes: { fadeIn: { '0%': { opacity: '0' }, '100%': { opacity: '1' }, }, slideUp: { '0%': { transform: 'translateY(10px)', opacity: '0' }, '100%': { transform: 'translateY(0)', opacity: '1' }, }, }, }, }, }; </script>
+</head>
+
+<body class="bg-background text-text font-sans">
+    <div class="container mx-auto px-4 py-10">
+        <h1 class="text-center text-4xl font-bold mb-6 text-primary animate-fadeIn">📊 Grade Calculator</h1>
+        <div
+            class="bg-card p-6 rounded-lg shadow-lg transition transform hover:scale-105 hover:shadow-xl animate-slideUp">
+            <form id="gradeForm">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                    <div> <label for="prelims" class="block text-sm font-medium mb-2">Prelims</label> <input
+                            type="number" id="prelims"
+                            class="w-full px-4 py-2 rounded-lg bg-background border border-secondary text-text focus:ring-primary focus:border-primary"
+                            placeholder="Enter Prelims" required> </div>
+                    <div> <label for="midterms" class="block text-sm font-medium mb-2">Midterms</label> <input
+                            type="number" id="midterms"
+                            class="w-full px-4 py-2 rounded-lg bg-background border border-secondary text-text focus:ring-primary focus:border-primary"
+                            placeholder="Enter Midterms"> </div>
+                    <div> <label for="prefinals" class="block text-sm font-medium mb-2">Pre-Finals</label> <input
+                            type="number" id="prefinals"
+                            class="w-full px-4 py-2 rounded-lg bg-background border border-secondary text-text focus:ring-primary focus:border-primary"
+                            placeholder="Enter Pre-Finals" required> </div>
+                    <div> <label for="finals" class="block text-sm font-medium mb-2">Finals</label> <input type="number"
+                            id="finals"
+                            class="w-full px-4 py-2 rounded-lg bg-background border border-secondary text-text focus:ring-primary focus:border-primary"
+                            placeholder="Enter Finals (optional)"> </div>
+                </div>
+                <div class="mb-6"> <label for="gwaTarget" class="block text-sm font-medium mb-2">Target GWA</label>
+                    <input type="number" id="gwaTarget"
+                        class="w-full px-4 py-2 rounded-lg bg-background border border-secondary text-text focus:ring-primary focus:border-primary"
+                        placeholder="Enter Target GWA (e.g., 74)" required> </div> <button type="button"
+                    class="w-full bg-primary text-white font-medium py-2 rounded-lg hover:bg-indigo-600 transition transform hover:scale-105"
+                    onclick="calculateGrades()">Calculate</button>
+            </form>
+        </div>
+        <div id="resultsContainer" class="mt-8 bg-card p-6 rounded-lg shadow-lg hidden animate-fadeIn">
+            <h2 class="text-2xl font-semibold mb-4 text-primary">Results</h2>
+            <p id="result" class="text-lg text-center mb-2"></p>
+            <p id="gwaResult" class="text-lg text-center mb-2"></p>
+            <p id="minimumPassingGrade" class="text-lg text-center mb-2"></p>
+            <p id="singleDigitGWA" class="text-lg text-center mb-2"></p>
+        </div>
+        <div id="progressContainer" class="mt-8 bg-card p-6 rounded-lg shadow-lg hidden animate-fadeIn">
+            <h2 class="text-2xl font-semibold mb-4 text-primary">Progress</h2>
+            <div class="w-full bg-secondary rounded-full h-4">
+                <div id="progressBar" class="bg-primary h-4 rounded-full transition-all duration-500"
+                    style="width: 0%;"></div>
+            </div>
+        </div>
+    </div>
+    <script> function calculateGrades() { const prelims = parseFloat(document.getElementById('prelims').value); const midterms = parseFloat(document.getElementById('midterms').value); const prefinals = parseFloat(document.getElementById('prefinals').value); const finals = parseFloat(document.getElementById('finals').value); const targetGWA = parseFloat(document.getElementById('gwaTarget').value); const passingGrade = 69.50; if (isNaN(prelims) || isNaN(prefinals) || isNaN(targetGWA)) { document.getElementById('result').textContent = "Please fill in all required fields with valid numbers."; return; } function getSingleDigitGWA(gwa) { if (gwa <= 74) return "5.0"; if (gwa <= 76) return "3.0"; if (gwa <= 79) return "2.75"; if (gwa <= 82) return "2.5"; if (gwa <= 84) return "2.25"; if (gwa <= 86) return "2.0"; if (gwa <= 88) return "1.75"; if (gwa <= 90) return "1.5"; if (gwa <= 92) return "1.25"; return "1.0"; } let weightedAverage = 0; if (!isNaN(midterms)) { weightedAverage = ((prelims + midterms + prefinals) / 3) * 0.6; } else { weightedAverage = ((prelims + prefinals) / 2) * 0.6; } if (isNaN(finals)) { const requiredFinals = (targetGWA - weightedAverage) / 0.4; const progress = Math.min((weightedAverage / targetGWA) * 100, 100); document.getElementById('progressBar').style.width = `${progress}%`; let resultMessage = ""; if (requiredFinals > 100) { resultMessage = `You need a Finals Grade greater than 100 to meet your target GWA.`; } else if (requiredFinals <= 0) { resultMessage = `You have already secured your target GWA.`; } else { resultMessage = `Required Finals Grade: <strong>${requiredFinals.toFixed(2)}</strong>`; } document.getElementById('result').innerHTML = resultMessage; const gwa = (weightedAverage + (requiredFinals * 0.4)).toFixed(2); const singleDigit = getSingleDigitGWA(gwa); document.getElementById('singleDigitGWA').innerHTML = `Projected GWA Equivalent: <strong>${singleDigit}</strong>`; const minPassing = (passingGrade - weightedAverage) / 0.4; if (minPassing > 100) { document.getElementById('minimumPassingGrade').innerHTML = `It is not possible to meet the minimum passing grade of ${passingGrade}.`; } else if (minPassing <= 0) { document.getElementById('minimumPassingGrade').innerHTML = `You have already secured the minimum passing grade of ${passingGrade}.`; } else { document.getElementById('minimumPassingGrade').innerHTML = `Minimum Finals Grade to Pass: <strong>${minPassing.toFixed(2)}</strong>`; } } else { const gwa = ((prelims * 0.2) + (midterms * 0.2 || 0) + (prefinals * 0.2) + (finals * 0.4)).toFixed(2); const singleDigit = getSingleDigitGWA(gwa); document.getElementById('gwaResult').innerHTML = `Your GWA based on the provided Finals Grade is: <strong>${gwa}</strong>`; document.getElementById('singleDigitGWA').innerHTML = `Your GWA equivalent is: <strong>${singleDigit}</strong>`; } document.getElementById('resultsContainer').classList.remove('hidden'); document.getElementById('progressContainer').classList.remove('hidden'); } </script>
+</body>
+
+</html>
