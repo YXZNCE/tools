@@ -30,8 +30,8 @@
     <div class="card shadow">
       <div class="card-body">
         <div class="mb-3">
-          <label for="fileInput" class="form-label">Upload Battery Data File (JSON):</label>
-          <input type="file" id="fileInput" class="form-control" accept=".synced">
+          <label for="fileInput" class="form-label">Upload Battery Data File:</label>
+          <input type="file" id="fileInput" class="form-control" accept=".json,.txt,.synced">
         </div>
         <button class="btn btn-primary w-100" onclick="processFile()">Upload and Calculate</button>
       </div>
@@ -59,35 +59,41 @@
       const reader = new FileReader();
 
       reader.onload = function(event) {
+        const rawText = event.target.result;
+        let data;
+        let fallbackUsed = false;
+
         try {
-          const data = JSON.parse(event.target.result);
-
-          const MaximumFCC = parseInt(data.last_value_MaximumFCC, 10) || 0;
-          const NominalChargeCapacity = parseInt(data.last_value_NominalChargeCapacity, 10) || 0;
-          const CycleCount = parseInt(data.last_value_CycleCount, 10) || 0;
-
-          const RealCapacity = MaximumFCC && NominalChargeCapacity
-            ? ((NominalChargeCapacity / MaximumFCC) * 100).toFixed(2)
-            : "N/A";
-
-          resultsDiv.innerHTML = `
-            <div class="card shadow fade-in">
-              <div class="card-body">
-                <h4 class="text-success">Results</h4>
-                <p><strong>MaximumFCC (Original Max Capacity):</strong> ${MaximumFCC} mAh</p>
-                <p><strong>NominalChargeCapacity (Current Capacity):</strong> ${NominalChargeCapacity} mAh</p>
-                <p><strong>Cycle Count:</strong> ${CycleCount}</p>
-                <p><strong>Real Capacity:</strong> ${RealCapacity}%</p>
-              </div>
-            </div>
-          `;
-        } catch (error) {
-          resultsDiv.innerHTML = `
-            <div class="alert alert-danger fade-in" role="alert">
-              Invalid JSON file. Please upload a properly formatted JSON file.
-            </div>
-          `;
+          data = JSON.parse(rawText);
+        } catch {
+          fallbackUsed = true;
+          const regex = /"last_value_(MaximumFCC|NominalChargeCapacity|CycleCount)":\s?(\d+)/g;
+          data = {};
+          let match;
+          while ((match = regex.exec(rawText)) !== null) {
+            data[`last_value_${match[1]}`] = match[2];
+          }
         }
+
+        const MaximumFCC = parseInt(data.last_value_MaximumFCC, 10) || 0;
+        const NominalChargeCapacity = parseInt(data.last_value_NominalChargeCapacity, 10) || 0;
+        const CycleCount = parseInt(data.last_value_CycleCount, 10) || 0;
+
+        const RealCapacity = MaximumFCC && NominalChargeCapacity
+          ? ((NominalChargeCapacity / MaximumFCC) * 100).toFixed(2)
+          : "N/A";
+
+        resultsDiv.innerHTML = `
+          <div class="card shadow fade-in">
+            <div class="card-body">
+              <h4 class="text-${fallbackUsed ? 'warning' : 'success'}">${fallbackUsed ? 'Backup Parsing Results' : 'Results'}</h4>
+              <p><strong>MaximumFCC (Original Max Capacity):</strong> ${MaximumFCC} mAh</p>
+              <p><strong>NominalChargeCapacity (Current Capacity):</strong> ${NominalChargeCapacity} mAh</p>
+              <p><strong>Cycle Count:</strong> ${CycleCount}</p>
+              <p><strong>Real Capacity:</strong> ${RealCapacity}%</p>
+            </div>
+          </div>
+        `;
       };
 
       reader.onerror = function() {
