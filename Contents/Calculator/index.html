@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+
+
+<!-- main proj, no meta tags for others like main etc etc shit -->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Primary Meta Tags -->
+    <title>STI College GWA & Grade Calculator | Calculate Your Academic Performance</title>
+    <meta name="description" content="Free online tool to calculate your General Weighted Average (GWA) and predict the grades you need to pass or reach your target GWA. Perfect for STI College students!">
+    <meta name="keywords" content="grade calculator, GWA calculator, STI college grades, academic calculator, general weighted average, grade prediction">
+    <meta name="author" content="STI College">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://yentools.netlify.app/">
+    <meta property="og:title" content="STI College GWA & Grade Calculator">
+    <meta property="og:description" content="Calculate your GWA and predict the grades you need to pass or reach your target. Free online calculator for STI College students.">
+    <meta property="og:image" content="https://yentools.netlify.app/Images/cac.png">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://yentools.netlify.app/">
+    <meta property="twitter:title" content="STI College GWA & Grade Calculator">
+    <meta property="twitter:description" content="Calculate your GWA and predict the grades you need to pass or reach your target. Free online calculator for STI College students.">
+    <meta property="twitter:image" content="https://yentools.netlify.app/Images/cac.png">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://yentools.netlify.app/">
+    
+    <!-- Fonts and Stylesheets -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <button id="themeToggle" class="theme-switch">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+    </button>
+    
+
+    
+    <div class="container">
+        <div class="header animate-fade-in">
+            <h1>Grade Calculator</h1>
+            <p>Calculate your current GWA and predict the grades you need</p>
+        </div>
+        
+        <div class="card animate-slide-in">
+            <div class="card-title">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
+                </svg>
+                Grade Overview
+            </div>
+            
+            <div class="tabs">
+                <div class="tab active" data-tab="calculator">Calculator</div>
+                <div class="tab" data-tab="predictions">Predictions</div>
+                <div class="tab" data-tab="tips">Tips & Help</div>
+            </div>
+            
+            <div id="calculatorContent" class="tab-content">
+                <div class="toggle-container">
+                    <span class="form-label">Grading System</span>
+                    <button id="toggleGradingSystem" class="toggle-btn">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="12" y1="8" x2="12" y2="16"></line>
+                            <line x1="8" y1="12" x2="16" y2="12"></line>
+                        </svg>
+                        Show Grading System
+                    </button>
+                </div>
+                
+                <div id="gradingSystem" class="grade-system hidden">
+                    <table class="grade-system-table">
+                        <tr>
+                            <th>Percentage Range</th>
+                            <th>Grade Equivalent</th>
+                            <th>Description</th>
+                        </tr>
+                        <tr>
+                            <td>97.50 - 100.00%</td>
+                            <td>1.00</td>
+                            <td>Excellent</td>
+                        </tr>
+                        <tr>
+                            <td>94.50 - 97.49%</td>
+                            <td>1.25</td>
+                            <td>Very Good</td>
+                        </tr>
+                        <tr>
+                            <td>91.50 - 94.49%</td>
+                            <td>1.50</td>
+                            <td>Very Good</td>
+                        </tr>
+                        <tr>
+                            <td>88.50 - 91.49%</td>
+                            <td>1.75</td>
+                            <td>Very Good</td>
+                        </tr>
+                        <tr>
+                            <td>85.50 - 88.49%</td>
+                            <td>2.00</td>
+                            <td>Satisfactory</td>
+                        </tr>
+                        <tr>
+                            <td>81.50 - 85.49%</td>
+                            <td>2.25</td>
+                            <td>Satisfactory</td>
+                        </tr>
+                        <tr>
+                            <td>77.50 - 81.49%</td>
+                            <td>2.50</td>
+                            <td>Satisfactory</td>
+                        </tr>
+                        <tr>
+                            <td>73.50 - 77.49%</td>
+                            <td>2.75</td>
+                            <td>Fair</td>
+                        </tr>
+                        <tr>
+                            <td>69.50 - 73.49%</td>
+                            <td>3.00</td>
+                            <td>Fair</td>
+                        </tr>
+                        <tr>
+                            <td>Below 69.50%</td>
+                            <td>5.00</td>
+                            <td>Failed</td>
+                        </tr>
+                    </table>
+                </div>
+                
+                <form id="gradeForm">
+                    <div class="grid">
+                        <div class="form-group">
+                            <label for="prelims" class="form-label">Prelims (20%)</label>
+                            <input id="prelims" type="number" class="form-input grade-input" placeholder="Enter prelims grade" min="0" max="100">
+                        </div>
+                        <div class="form-group">
+                            <label for="midterm" class="form-label">Midterm (20%)</label>
+                            <input id="midterm" type="number" class="form-input grade-input" placeholder="Enter midterm grade" min="0" max="100">
+                        </div>
+                        <div class="form-group">
+                            <label for="prefinals" class="form-label">Pre-Finals (20%)</label>
+                            <input id="prefinals" type="number" class="form-input grade-input" placeholder="Enter pre-finals grade" min="0" max="100">
+                        </div>
+                        <div class="form-group">
+                            <label for="finals" class="form-label">Finals (40%)</label>
+                            <input id="finals" type="number" class="form-input grade-input" placeholder="Enter finals grade" min="0" max="100">
+                        </div>
+                    </div>
+                    
+                    <div class="grid">
+                        <div class="form-group">
+                            <label for="targetGWA" class="form-label">Target GWA</label>
+                            <div class="input-group">
+                                <div class="input-addon input-addon-left">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <circle cx="12" cy="12" r="10"></circle>
+                                        <polyline points="12 6 12 12 16 14"></polyline>
+                                    </svg>
+                                </div>
+                                <input id="targetGWA" type="number" class="form-input" value="74" min="0" max="100" step="0.01">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="passingGrade" class="form-label">Passing Grade</label>
+                            <div class="input-group">
+                                <div class="input-addon input-addon-left">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                                        <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                                    </svg>
+                                </div>
+                                <input id="passingGrade" type="number" class="form-input" value="69.5" min="0" max="100" step="0.01">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button type="button" id="calculateBtn" class="btn btn-primary btn-full">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="9 11 12 14 22 4"></polyline>
+                            <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
+                        </svg>
+                        Calculate & Update
+                    </button>
+                </form>
+                
+                <div class="progress-container">
+                    <div id="progressBar" class="progress-bar" style="width: 0%"></div>
+                </div>
+                
+                <div class="result-item">
+                    <div class="result-heading">Current GWA</div>
+                    <div id="currentGWA" class="result-value">N/A</div>
+                    <div id="currentGWAEquivalent" class="result-info">Enter at least one grade</div>
+                </div>
+                
+                <div class="result-item">
+                    <div class="result-heading">Required Grade</div>
+                    <div id="requiredGrade" class="result-value">N/A</div>
+                    <div id="requiredGradeInfo" class="result-info">Enter at least one grade</div>
+                </div>
+                
+                <div class="result-item">
+                    <div class="result-heading">Passing Requirement</div>
+                    <div id="passingRequirement" class="result-value">N/A</div>
+                    <div id="passingRequirementInfo" class="result-info">Enter at least one grade</div>
+                </div>
+            </div>
+            
+            <div id="predictionsContent" class="tab-content hidden">
+                <div id="predictionContainer">
+                    <div class="prediction-card">
+                        <div class="prediction-title">No Predictions Available</div>
+                        <div class="prediction-row">
+                            <span>Enter at least one grade to see predictions</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="tipsContent" class="tab-content hidden">
+                <div class="tip-item">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="12" y1="16" x2="12" y2="12"></line>
+                        <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                    </svg>
+                    <span>You don't need to enter all grades. The calculator will work with any combination of grades.</span>
+                </div>
+                
+                <div class="tip-item">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="9 11 12 14 22 4"></polyline>
+                        <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
+                    </svg>
+                    <span>You can adjust the target GWA and passing grade as needed</span>
+                </div>
+                
+                <div class="tips-container" style="margin-top: 1.5rem;">
+                    <div class="tips-title">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path>
+                        </svg>
+                        Pro Tips
+                    </div>
+                    
+                    <div class="tip-item">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
+                        </svg>
+                        <span>Focus on components with higher weights (like Finals at 40%) to maximize your grade improvement</span>
+                    </div>
+                    
+                    <div class="tip-item">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
+                        </svg>
+                        <span>Use the keyboard shortcut <kbd>Ctrl</kbd>+<kbd>K</kbd> to quickly access commands</span>
+                    </div>
+                    
+                    <div class="tip-item">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
+                        </svg>
+                        <span>Use dark mode for less eye strain when studying at night</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Command Menu -->
+    <div id="commandMenu" class="command-menu hidden">
+        <div class="command-search">
+            <input id="commandInput" type="text" class="command-input" placeholder="Type a command or search...">
+        </div>
+        <div id="commandList" class="command-list"></div>
+    </div>
+    
+    <!-- Toast Container -->
+    <div id="toastContainer" class="toast-container"></div>
+    
+    <script src="script.js"></script>
+</body>
+
+</html>
